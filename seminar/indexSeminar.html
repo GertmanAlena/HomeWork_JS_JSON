@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: powderblue;
+        }
+        .img__content {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            /* padding: 5px; */
+            width: 50%;
+            height: 50%;
+        }
+        .title__content {
+            font-size: 30px;
+            font-weight: 600;
+            background-image: linear-gradient(to left, #553c9a, #b393d3);
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+        .text__content{
+            color: rgb(40, 34, 69);
+        }
+       
+    </style>
+</head>
+
+<body>
+
+    <div class="content"></div>
+
+    <script src="jsonSeminar.js"></script>
+
+    <script>
+
+        const imagesData = JSON.parse(dataInfo); // взяли данные из js
+        console.log(imagesData);
+        
+        const contentEl = document.querySelector('.content'); // поймали content
+
+        imagesData.forEach(imageData => {
+
+            const titleEl = document.createElement('h1');   // создаём элемент h1
+            titleEl.classList.add('title__content');        // присваиваем класс
+            titleEl.textContent = imageData.title;          // добавляем заголовок
+
+            const imgEl = document.createElement('img');    // создаём элемент img
+            imgEl.classList.add('img__content');            // присваиваем картинке класс
+            imgEl.setAttribute('alt', imageData.status);
+            imgEl.src = imageData.message;
+
+            const textEl = document.createElement('p');     // создаём элемент p
+            textEl.classList.add('text__content');          // присваиваем параграфу класс
+            textEl.textContent = imageData.text;            // взяли текст из js
+
+   
+            contentEl.appendChild(titleEl);
+            contentEl.appendChild(imgEl);                   // добавили родительскому классу картинку
+            contentEl.appendChild(textEl);                  // добавили родительскому классу текст 
+
+    
+        });
+
+
+    </script>
+
+</body>
+</html>

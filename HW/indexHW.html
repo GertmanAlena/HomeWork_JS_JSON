@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <form class="form" action="indexHW.html">
+        <div class="select">
+            <div class="select"><h1> <span>Какой тип занятий Вам подобрать?</span></h1></div>
+            <!-- <label for="select">Какой тип занятий Вам подобрать?<br></label> -->
+            <select class="selects" name="select" id="select">
+                <option class="option" value="">Выбирай ...</option>
+                <option class="option" value="all">все занятия</option>
+                <option class="option" value="entertainment">развлечение</option>
+                <option class="option" value="meditation">медитация</option>
+                <option class="option" value="education">образование</option>
+            </select>
+        </div>
+        <button type="submit" class="button">Подобрать</button>
+    
+    </form>
+    
+    <div class="content"></div>
+    <script src="data.js"></script>
+
+    <script>
+
+        // взяли данные из js
+        const dataJsEls = JSON.parse(data);
+
+        const contentEl = document.querySelector('.content');
+
+        const classesEl = document.createElement('div'); //DIV для игр + каждая игра в отдельном div
+        classesEl.classList.add("content__classes");
+        contentEl.appendChild(classesEl);
+
+        const formEl = document.querySelector('.form');
+        const selectEl = formEl.querySelector('.selects');
+        const buttonEl = formEl.querySelector('.button');
+
+        document.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (selectEl.value === 'all') {
+                console.log(selectEl.value);
+                selectAll();
+            } 
+            if (selectEl.value === 'entertainment') {
+                removeChild(classesEl);
+                selectEntertainment();
+            } 
+            if (selectEl.value === 'meditation') {
+                removeChild(classesEl);
+                selectMeditation();
+            } 
+            if (selectEl.value === 'education') {
+                removeChild(classesEl);
+                selectEducation();
+            } 
+        });
+
+        // метод очистки страницы перед новой сортировкой
+        function removeChild(classesEl) {
+            while (classesEl.firstChild) {
+                classesEl.removeChild(classesEl.firstChild);
+            }
+        }
+       
+        // все развлечения
+        function selectAll() {
+
+            dataJsEls.forEach(dataJsEl => {
+            
+                const occupationEl = document.createElement('div');     //создали div для одного занятия
+                occupationEl.classList.add("occupation");
+                const nameOccupation = document.createElement('h1');    //заголовок занятия 
+                nameOccupation.classList.add("occupation__title");
+                nameOccupation.textContent = dataJsEl.activity;
+
+                const typeOccupation = document.createElement('p');    //тип занятия 
+                typeOccupation.classList.add("occupation__type");
+                const typeText = `☺ тип занятия ☺ ${dataJsEl.type}`;
+                typeOccupation.textContent = typeText;
+
+                const participantsOccupation = document.createElement('p');    //минимальное количсетво игроков занятия 
+                participantsOccupation.classList.add("occupation__participants");
+                const textP = `минимальное количеcтво игроков ${dataJsEl.participants}`
+                participantsOccupation.textContent = textP;
+
+                const linkOccupation = document.createElement('a');    //ссылка 
+                linkOccupation.classList.add("occupation__link");
+
+                // если есть ссылка, то добавляем
+                if (dataJsEl.link !== "") {
+                    linkOccupation.textContent = `👉перейти `;
+                    linkOccupation.href = dataJsEl.link;
+                }
+
+                const imageOccupation = document.createElement('img');    //картинка 
+                imageOccupation.classList.add("occupation__img");
+                imageOccupation.src = dataJsEl.image;
+                const altImage = `image ${dataJsEl.activity}`
+                imageOccupation.setAttribute('alt', altImage); 
+                
+
+                classesEl.appendChild(occupationEl);                //добавили весь div занятия к content
+                occupationEl.appendChild(nameOccupation);           //добавили заголовок
+                occupationEl.appendChild(typeOccupation);           //добавили тип
+                occupationEl.appendChild(participantsOccupation);   //добавили количсетво игроков
+                
+                occupationEl.appendChild(imageOccupation);           //добавили картинку
+
+                occupationEl.appendChild(linkOccupation);           //добавили ссылку
+
+            });
+
+        }
+
+        // просто развлечения
+        function selectEntertainment() {
+            
+            dataJsEls.forEach(dataJsEl => {
+            
+                const occupationEl = document.createElement('div');     //создали div для одного занятия
+                occupationEl.classList.add("occupation");
+                const nameOccupation = document.createElement('h1');    //заголовок занятия 
+                nameOccupation.classList.add("occupation__title");
+                nameOccupation.textContent = dataJsEl.activity;
+
+                const typeOccupation = document.createElement('p');    //тип занятия 
+                typeOccupation.classList.add("occupation__type");
+                const typeText = `☺ тип занятия ☺ ${dataJsEl.type}`;
+                typeOccupation.textContent = typeText;
+
+                const participantsOccupation = document.createElement('p');    //минимальное количсетво игроков занятия 
+                participantsOccupation.classList.add("occupation__participants");
+                const textP = `минимальное количесетво игроков ${dataJsEl.participants}`
+                participantsOccupation.textContent = textP;
+
+                const linkOccupation = document.createElement('a');    //ссылка 
+                linkOccupation.classList.add("occupation__link");
+
+                // если есть ссылка, то добавляем
+                if (dataJsEl.link !== "") {
+                    linkOccupation.textContent = `👉перейти `;
+                    linkOccupation.href = dataJsEl.link;
+                }
+
+                const imageOccupation = document.createElement('img');    //картинка 
+                imageOccupation.classList.add("occupation__img");
+                imageOccupation.src = dataJsEl.image;
+                const altImage = `image ${dataJsEl.activity}`
+                imageOccupation.setAttribute('alt', altImage); 
+               
+                if (dataJsEl.type === 'развлечение') {
+                    classesEl.appendChild(occupationEl);                //добавили весь div занятия к content
+                    occupationEl.appendChild(nameOccupation);           //добавили заголовок
+                    occupationEl.appendChild(typeOccupation);       //добавили тип
+                    occupationEl.appendChild(participantsOccupation);   //добавили количсетво игроков
+                    occupationEl.appendChild(imageOccupation);           //добавили картинку
+                    occupationEl.appendChild(linkOccupation);           //добавили ссылку
+                }
+        });
+
+        }
+
+        // развлечение для медитации
+        function selectMeditation() {
+            
+            dataJsEls.forEach(dataJsEl => {
+            
+                const occupationEl = document.createElement('div');     //создали div для одного занятия
+                occupationEl.classList.add("occupation");
+                const nameOccupation = document.createElement('h1');    //заголовок занятия 
+                nameOccupation.classList.add("occupation__title");
+                nameOccupation.textContent = dataJsEl.activity;
+
+                const typeOccupation = document.createElement('p');    //тип занятия 
+                typeOccupation.classList.add("occupation__type");
+                const typeText = `☺ тип занятия ☺ ${dataJsEl.type}`;
+                typeOccupation.textContent = typeText;
+
+                const participantsOccupation = document.createElement('p');    //минимальное количсетво игроков занятия 
+                participantsOccupation.classList.add("occupation__participants");
+                const textP = `минимальное количесетво игроков ${dataJsEl.participants}`
+                participantsOccupation.textContent = textP;
+
+                const linkOccupation = document.createElement('a');    //ссылка 
+                linkOccupation.classList.add("occupation__link");
+
+                // если есть ссылка, то добавляем
+                if (dataJsEl.link !== "") {
+                    linkOccupation.textContent = `👉перейти `;
+                    linkOccupation.href = dataJsEl.link;
+                }
+
+                const imageOccupation = document.createElement('img');    //картинка 
+                imageOccupation.classList.add("occupation__img");
+                imageOccupation.src = dataJsEl.image;
+                const altImage = `image ${dataJsEl.activity}`
+                imageOccupation.setAttribute('alt', altImage); 
+ 
+                if (dataJsEl.type === 'медитация') {
+                    classesEl.appendChild(occupationEl);                //добавили весь div занятия к content
+                    occupationEl.appendChild(nameOccupation);           //добавили заголовок
+                    occupationEl.appendChild(typeOccupation);           //добавили тип
+                    occupationEl.appendChild(participantsOccupation);   //добавили количсетво игроков
+                    occupationEl.appendChild(imageOccupation);          //добавили картинку
+                    occupationEl.appendChild(linkOccupation);           //добавили ссылку
+                }
+        });
+
+        }
+
+        // образовательные развлечение 
+        function selectEducation() {
+            
+            dataJsEls.forEach(dataJsEl => {
+            
+                const occupationEl = document.createElement('div');     //создали div для одного занятия
+                occupationEl.classList.add("occupation");
+                const nameOccupation = document.createElement('h1');    //заголовок занятия 
+                nameOccupation.classList.add("occupation__title");
+                nameOccupation.textContent = dataJsEl.activity;
+
+                const typeOccupation = document.createElement('p');    //тип занятия 
+                typeOccupation.classList.add("occupation__type");
+                const typeText = `☺ тип занятия ☺ ${dataJsEl.type}`;
+                typeOccupation.textContent = typeText;
+
+                const participantsOccupation = document.createElement('p');    //минимальное количсетво игроков занятия 
+                participantsOccupation.classList.add("occupation__participants");
+                const textP = `минимальное количесетво игроков ${dataJsEl.participants}`
+                participantsOccupation.textContent = textP;
+
+                const linkOccupation = document.createElement('a');    //ссылка 
+                linkOccupation.classList.add("occupation__link");
+
+                // если есть ссылка, то добавляем
+                if (dataJsEl.link !== "") {
+                    linkOccupation.textContent = `👉перейти `;
+                    linkOccupation.href = dataJsEl.link;
+                }
+
+                const imageOccupation = document.createElement('img');    //картинка 
+                imageOccupation.classList.add("occupation__img");
+                imageOccupation.src = dataJsEl.image;
+                const altImage = `image ${dataJsEl.activity}`
+                imageOccupation.setAttribute('alt', altImage); 
+          
+                if (dataJsEl.type === 'образование') {
+                    classesEl.appendChild(occupationEl);                //добавили весь div занятия к content
+                    occupationEl.appendChild(nameOccupation);           //добавили заголовок
+                    occupationEl.appendChild(typeOccupation);           //добавили тип
+                    occupationEl.appendChild(participantsOccupation);   //добавили количсетво игроков
+                    occupationEl.appendChild(imageOccupation);          //добавили картинку
+                    occupationEl.appendChild(linkOccupation);           //добавили ссылку
+
+                }
+            });
+
+        }
+
+
+    </script>
+
+</body>
+</html>
